@@ -6,6 +6,8 @@
  #include <stdio.h>
  #include <string.h>
  #include <math.h>
+ #include <stdbool.h>
+ #include <stdlib.h>
 
 //function declarations
 void read_10_integers();
@@ -22,10 +24,23 @@ void grocery_bill();
 void print_bill(char* name1, char* name2, char* name3, int qty1, int qty2, int qty3
 	, double price1, double price2, double price3);
 void octalAndHexadecimal();
+void exponential_format();
+void smallest_number(int firstNum, int secondNum, int thirdNum);
+void triangle_area(double base, double height);
+void div_by_two(int number);
+void print_using_pointers();
+void read_characters();
+void add_three_floating_point_numbers(float n1, float n2, float n3);
+void check_number_or_character();
+void sum_and_average(int n);
+void prime_numbers(int m, int n);
+bool check_if_prime(int i);
+
+
 
 int main()
 {
-	octalAndHexadecimal();
+	prime_numbers(1, 10);
 return 0;
 }
 
@@ -201,7 +216,7 @@ void grocery_bill()
 			scanf("%lf", &price3);
 			break;
 		default:
-			break;+++++++
+			break;
 		}
 	}
 
@@ -231,7 +246,209 @@ void octalAndHexadecimal()
 }
 
 
-void exponentialFormat()
+void exponential_format()
 {
-	-++
+	// 1234.789312
+	//exponential format (correct to 2 decimal places) : 1.23478 * 10^3 
+	//exponential format (correct to 4 decimal places) : 1.2347893 * 10^3
+	//... and so on
+
+}
+
+void smallest_number(int firstNum, int secondNum, int thirdNum)
+{
+	if(firstNum < secondNum)
+	{
+		if(firstNum < thirdNum)
+		{
+			printf("The smallest number is: %i", firstNum);
+		}
+		else{
+			printf("The smallest number is: %i", thirdNum);
+		}
+	}
+	else{
+		printf("The smallest number is: %i", secondNum);
+	}
+}
+
+void triangle_area(double base, double height)
+{
+	printf("The area of the triangle is : %lf", (0.5 * base * height));
+}
+
+void div_by_two(int number)
+{
+	if(number % 2 == 0)
+	{
+		printf("Number is divisable by 2");
+	}else{
+		printf("Number is not divisable by 2");
+	}
+}
+
+void print_using_pointers()
+{
+	char text[50] = "Programming in C is Fun!";
+	char (*ptr)[50] = &text; //special syntax for pointer to array
+
+	printf("The text is : %s", *ptr);
+}
+
+void read_characters()
+{
+	char character;
+	do{
+		printf("Please Enter a Character: \n");
+		scanf("%c", &character);
+		printf("The character you entered is : %c \n", character);
+		printf("The ASCII code of the character you entered is : %i \n\n", character+0);
+		
+	} while(character != '*');
+}
+
+void add_three_floating_point_numbers(float n1, float n2, float n3)
+{
+	float result = n1 + n2 + n3;
+	printf("%.2f", result);
+}
+
+void check_number_or_character()
+{
+	char input;
+	printf("Please enter a character or a number \n");
+
+	scanf("%c", &input);
+	if( (input + 0) >= 49 && (input+0) <=57)
+	{
+		//then input is a number
+		printf("Input is a number\n");
+	}
+	else if((input + 0) >= 65 && (input + 0) <= 90)
+	{
+		//this is an uppercase letter
+		printf("Input is an uppercase letter and its ASCII value is %i", input+0);
+	}
+	else if((input + 0) >= 97 && (input + 0) <= 122)
+	{
+		//this is an lowercase letter
+		printf("Input is an lowercase letter and its ASCII value is %i", input+0);
+	}
+	else{
+		printf("INVALID INPUT\n");
+	}
+}
+
+void sum_and_average(int n)
+{
+	int sum = 0;
+	for(int i = 1; i<=n; i++)
+	{
+		sum+=i;
+	}
+
+	printf("the sum of the numbers from 1 to n is : %i", sum);
+	printf("the average of the numbers from 1 to n is : %lf", ( (double)sum) / n  );
+}
+
+void odd_numbers(int m, int n)
+{
+	for(int i = m; i<= n; i++)
+	{
+		if(i % 2 != 0)
+		{
+			printf("%i", i);
+		}
+	}
+}
+
+void prime_numbers(int m, int n)
+{
+	for(int i = m; i<=n; i++)
+	{
+		if(check_if_prime(i))
+		{
+			printf("%i\n", i);
+		}
+	}
+}
+
+bool check_if_prime(int i)
+{
+	bool isPrime = true;
+	for(int j = 2; j<i; j++)
+	{
+		//if number found that i is divisable by, then i is NOT prime, so set isPrime to false
+		if(i % j == 0)
+		{
+			isPrime = false;
+			break;
+		}
+	}
+
+	return isPrime;
+}
+
+void armstrong_number()
+{
+
+}
+
+int get_number_in_integer_format(char* number)
+{
+	int n = 0;
+	int armstrong_sum = 0;
+	for(int i = strlen(number) - 1; i>=0; i++)
+	{
+		//get the armstrong sum while we are at it
+		armstrong_sum+= get_individual_digit_in_integer_format(char[i]) * pow(10, strlen(number) - 1)
+
+		//get the whole number
+		n+= get_individual_digit_in_integer_format(char[i]) * pow(10, (abs(i - (strlen(number)-1) ) ) );
+	}
+	return n;
+}
+
+int get_individual_digit_in_integer_format(char digit)
+{
+	switch(digit)
+	{
+	case '1':
+		return 1;
+	case '2':
+		return 2;
+	case '3':
+		return 3;
+	case '4':
+		return 4;
+	case '5':
+		return 5;
+	case '6':
+		return 6;
+	case '7':
+		return 7;
+	case '8':
+		return 8;
+	case '9':
+		return 9;
+	case '0':
+		return 0;
+	}
+}
+
+void add_using_pointers(float a, float b)
+{
+	float* ptr1 = &a;
+	float* ptr2 = &b;
+
+	float sum = *ptr1 + *ptr2;
+	printf("The sum is : %f", sum);
+}
+
+void triangle_area_using_pointers(float base, float height)
+{
+	float *ptr1 = &base;
+	float *ptr2 = &height;
+
+	float area = 0.5 * (*ptr1) * (*ptr2);
 }
