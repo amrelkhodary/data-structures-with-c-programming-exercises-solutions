@@ -1,0 +1,300 @@
+ //this is the solutions file for chapter 3 of the the textbook "Data Structures with C"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+/*
+	pn, n indicates the number of the programming problem (i.e. p1 = solution to the first problem, p2 = solution to the second
+	etc..)
+	
+	sometimes a problem is too big to be written in a single function so we'll need to use multiple subroutines, those kinds
+	of functions will be written as snpn (sn = subroutine number n, pn = problem number n)
+
+	also, there are many functionalities that may be frequently needed throughout the problems, those functions will be named 
+	according to their functionality and they will be appended to the end of this file.
+
+	*Sometimes i might skip problems because they are too easy
+	*Sometimes i might solve the problem but using different numerical values for whatever reason.
+
+	Have Fun :)
+
+*/
+
+//problem functions
+void p1(); 
+double* s1p1(int marks[3][5]);
+double* s2p1(int marks[3][5]);
+int s3p1(int marks[3][5]);
+void s4p1(int marks[3][5]);
+void p2();
+void p3(int arr[], size_t arrSize);
+void p5();
+
+//general purpose functions
+void display1DNumericArray(double* arr, size_t arrSize);
+void display1DNumericArray_int(int* arr, size_t arrSize);
+void display2DNumericArray(int(*arr)[5] , size_t numOfRows, size_t numOfCols);
+
+
+
+int main()
+{
+	//choose any problem you want to run and call its function here
+	p5();
+	return 0;
+}
+
+void p1()
+{
+	/*
+		1. Consider an array MARKS[20][5] which stores the
+		   marks obtained by 20 students in 5 subjects. Now write a program to:
+
+			(a) find the average marks obtained in each
+				subject.
+			(b) find the average marks obtained by every
+				student
+
+			(c) find the number of students who have scored
+				below 50 in their average. 
+
+				(*orginal says below 50, but i did below 10 because my version has the max mark to be 20, same idea though :) )
+
+			(d) display the scores obtained by every student.
+
+			*The original question asks us to consider the marks of 20 students and 5 subjects, 
+			but that will be too long of an array to write out, so i will consider instead a more simple 3
+			students and 5 subjects but you get the general idea. 
+	*/
+
+	int marks[3][5] = {18, 19, 13, 14, 2,	15, 13, 7, 8, 10,	12, 16, 10, 20, 20};
+	double* avgMarkForEverySubject = s1p1(marks);
+	double* avgMarkForEveryStudent = s2p1(marks);
+	int numberOfStudentsWhoScoredBelow10 = s3p1(marks);
+
+	printf("The average mark for every subject is: \n\n");
+	display1DNumericArray(avgMarkForEverySubject, 5);
+
+	printf("The average mark for every student is: \n\n");
+	display1DNumericArray(avgMarkForEveryStudent, 3);
+
+	printf("The number of students who scroed below 10 in their avegerage is: %i\n\n", numberOfStudentsWhoScoredBelow10);
+
+	s4p1(marks);
+
+
+	free(avgMarkForEverySubject); //array was dynamically allocated so the mem has to be freed
+	free(avgMarkForEveryStudent); //array was dynamically allocated so the mem has to be freed
+}
+
+double* s1p1(int marks[3][5])
+{
+	double* avgMarkForEverySubject = (double*) malloc(5 * sizeof(double));
+	if(avgMarkForEverySubject == NULL)
+	{
+		printf("ERROR: failed to allocate memory for avgMarkForEverySubject array in s1p1 function\n");
+		return NULL;
+	}
+
+	//variable for holding the temporary sum of the marks for each subject
+	double temp = 0;
+	for(int col = 0; col<5; col++)
+	{
+		for(int row = 0; row<3; row++)
+		{
+			temp+= marks[row][col];
+		}
+
+		temp/=3; //dividing by the number of students to get the average
+		avgMarkForEverySubject[col] = temp;
+		temp = 0; //resetting temp for next iteration
+	}
+
+	return avgMarkForEverySubject;
+}
+
+double* s2p1(int marks[3][5])
+{
+	double* avgMarkForEveryStudent = (double*) malloc(3 * sizeof(double));
+	if(avgMarkForEveryStudent == NULL)
+	{
+		printf("ERROR: failed to allocate memory for avgMarkForEveryStudent array in s2p1 function\n");
+		return NULL;
+	}
+
+	double temp;
+	for(int row = 0; row<3; row++)
+	{
+		for(int col = 0; col<5; col++)
+		{
+			temp+=marks[row][col];
+		}
+
+		temp/=5; //dividing by the number of subjects to get the average
+		avgMarkForEveryStudent[row] = temp;
+		temp = 0; //resetting temp for next iteration
+	}
+
+	return avgMarkForEveryStudent;
+}
+
+int s3p1(int marks[3][5])
+{
+	int count = 0; //count variable to store the number of students who scored below 10 in their average
+	double* avgMarkForEveryStudent = s2p1(marks);
+
+	for(int i = 0; i<3; i++)
+	{
+		if(avgMarkForEveryStudent[i] < 10)
+		{
+			count++;
+		}
+	}
+
+	return count;
+}
+
+void s4p1(int marks[3][5])
+{
+	printf("The scores of every student is: \n\n");
+	display2DNumericArray(marks, 3, 5);
+}
+
+
+void p2()
+{
+	/*
+		Write a program that reads and array of 100 integers. Display all the pairs of elements whose sum is 50
+	*/
+
+	//getting input from the user
+	int numbers[100] = {};
+	printf("Please Enter your numbers" );
+	for(int i = 0; i<100; i++)
+	{
+		scanf("%i\n", &numbers[i]);
+	}
+
+	//displaying the pairs of integers whose sum is 50
+	/*
+		the algorithm will work as following:- 
+
+		for every element i in the numbers array:
+			go through all elements after E after i, and for every element e:
+				if i + e = 50, display the pair
+	*/
+
+	for(int i = 0; i<100; i++)
+	{
+		for(int j = i+1; j<100; j++)
+		{
+			if(numbers[i] + numbers[j] == 50)
+			{
+				printf("%i and %i sum to 50", numbers[i], numbers[j]);
+			}
+		}
+	}
+}
+
+void p3(int arr[], size_t arrSize)
+{
+	int temp = arr[1];
+	arr[1] = arr[arrSize - 2];
+	arr[arrSize - 2] = temp;
+
+
+
+	display1DNumericArray_int(arr, arrSize);
+}
+
+void p5()
+{
+	/*
+		write a program to calculate the sum and mean of elements of a 2D array
+	*/
+
+	int twoDArr[2][3] = {1,2,3,
+				 4,5,6};
+	int sum = 0;
+	double mean;
+
+	//calculating the sum
+	for(int i = 0; i<2; i++)
+	{
+		for(int j = 0; j<3; j++)
+		{
+			sum+= twoDArr[i][j];
+		}
+	}
+
+	mean = (double)sum / 6; //mean = sum / number of elements (6)
+
+	printf("The sum of the elements is: %i\n", sum);
+	printf("The mean of the elements is: %lf\n", mean);
+}
+
+//general functions defined below here
+void display1DNumericArray(double* arr, size_t arrSize)
+{
+	for(int i = 0; i<arrSize; i++)
+	{
+		//printing an integer if the array is of type int* and double if arr is double*
+		printf("%lf\n", arr[i]);
+
+	printf("----------------------------------------------------------------------------------");
+	printf("\n\n");
+	}
+
+}
+
+void display1DNumericArray_int(int* arr, size_t arrSize)
+{
+		for(int i = 0; i<arrSize; i++)
+	{
+		//printing an integer if the array is of type int* and double if arr is double*
+		printf("%i\n", arr[i]);
+
+	printf("----------------------------------------------------------------------------------");
+	printf("\n\n");
+	}
+
+}
+
+void display2DNumericArray(int(*arr)[5] , size_t numOfRows, size_t numOfCols)
+{
+	/*
+		Desired Output:
+
+				col1	col2	col3
+		row1       
+
+		row2
+
+		row3
+
+		Notes: (1): cols has 2 tabs inserted before it
+			   (2): between rows there are 2 new lines
+			   (3): the space between each value is a tab
+
+	*/
+
+	printf("\t\t");
+
+	for(int i = 0; i<numOfCols; i++)
+	{	
+		printf("col%i\t", i+1);
+	}
+
+	printf("\n");
+	for(int i = 0; i<numOfRows; i++)
+	{
+		printf("row%i\t\t", i+1);
+		for(int j = 0; j<numOfCols; j++)
+		{
+			printf("%i\t", arr[i][j]);
+		}
+
+		printf("\n\n");
+	}
+}
