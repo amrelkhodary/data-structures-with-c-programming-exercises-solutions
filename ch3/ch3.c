@@ -30,19 +30,29 @@ void s4p1(int marks[3][5]);
 void p2();
 void p3(int arr[], size_t arrSize);
 void p5();
+int p7();
+int **p8();
+int p9(int (*matrix)[3], size_t numOfRows, size_t numOfCols);
+int p10(int *matrix, size_t numOfRows, size_t numOfCols);
 
 //general purpose functions
 void display1DNumericArray(double* arr, size_t arrSize);
 void display1DNumericArray_int(int* arr, size_t arrSize);
 void display2DNumericArray(int(*arr)[5] , size_t numOfRows, size_t numOfCols);
+void display2DNumericArrayUsingPtrs(int** arr, size_t numOfRows, size_t numOfCols);
 
 
 
 int main()
 {
 	//choose any problem you want to run and call its function here
-	p5();
-	return 0;
+	int matrix[3][3] = {1, 2, 3,
+						4, 5, 6,
+						7, 8 ,9};
+/*	printf("The number of non-zero elements is: %i\n", p10((int**)matrix, 3, 3));
+	return 0;*/
+	printf("hello");
+	p10((int*)matrix, 3, 3);
 }
 
 void p1()
@@ -234,6 +244,131 @@ void p5()
 	printf("The mean of the elements is: %lf\n", mean);
 }
 
+int p7()
+{
+	/*
+		Write a program that computes the sum of elements that are stored on the main diagonal of a 
+		matrix using pointers
+
+		A 3x3 Matrix is represented by using 2D array of size [3][3]
+	*/
+
+	int matrix[3][3] = {4,6,7,
+						8,19,2,
+						90,10,3};
+	/*
+		Pointer arithmetic
+		lets say that we have a pointer ptr that points to the first element of the matrix
+		{x1, x2, x3 ,x4, x5, x6, x7, x8, x9}
+
+		the pointers for the elements that we need to sum:
+		1- ptr1 to the first element
+		2- ptr2 to the fifth element
+		3- ptr3 to the ninth element
+	*/
+
+	int* firstElementPtr = &matrix[0][0];
+	int* fifthElementPtr = &matrix[1][1];
+	int* ninthElementPtr = &matrix[2][2];
+
+	return (*firstElementPtr + *fifthElementPtr + *ninthElementPtr); 
+}
+
+int **p8()
+{
+	int first_matrix[3][3] =  {4,6,7,
+							   8,19,2,
+							   90,10,3};
+
+	int second_matrix[3][3] = {4,6,7,
+							   8,19,2,
+							   90,10,3};
+
+
+	//allocating the memory for the sum_matrix
+	int** sum_matrix = (int**) malloc(3 * sizeof(int*));
+	if(sum_matrix == NULL)
+	{
+		printf("ERROR: Failed to allocate memory to sum_matrix in function p8\n");
+		exit(-1);
+	}
+
+	for(int i = 0; i<3; i++)
+	{
+		sum_matrix[i] = (int*) malloc(3 * sizeof(int));
+		if(sum_matrix[i] == NULL)
+		{
+			printf("ERROR: Failed to allocate memory to sum_matrix[%i] in function p8\n", i);
+			exit(-1);
+		}
+	}
+
+
+	for(int i = 0; i<3; i++)
+	{
+		for(int j = 0; j<3; j++)
+		{
+			sum_matrix[i][j] = first_matrix[i][j] + second_matrix[i][j];
+		}
+	}
+	display2DNumericArrayUsingPtrs(sum_matrix, 3, 3);
+	return sum_matrix;
+}
+
+int p9(int (*matrix)[3], size_t numOfRows, size_t numOfCols)
+{
+	/*
+		Write a program that computes the product of the elements that are stored
+		on the diagonal about the main diagonal
+
+		Note that the elements on the diagonal are the elements where i = j, an element
+		is considered above the diagonal if it is to the left of a diagonal element.
+
+		The algorithm: 
+		(pardon my horrible psuedocode, was too lazy to learn the syntax of psuedocode in algos class :) )
+
+		product = 1
+		for all diagonal elements D:
+			for every element e to the left of a diagonal element d:
+				product*=e
+
+
+	*/
+
+	int product = 1;
+	for(int i = 0; i<numOfRows /* could have used numOfCols too since matrix is symmetrical*/; i++)
+	{
+		for(int j = i+1; j<numOfRows /*could've also used numOfCols here too*/; j++)
+		{
+			product *= matrix[i][j];
+		}
+	}
+
+	return product;
+}
+
+int p10(int *matrix, size_t numOfRows, size_t numOfCols)
+{
+	/*
+		Write a program to count the total number of non-zero elements in a two-dimensional 
+		array
+	*/
+
+	int count = 0;
+	for(int i = 0; i<numOfRows; i++)
+	{
+		for(int j = 0; j<numOfCols; j++)
+		{
+			//access internal matrix elements using pointer arithmetic
+			printf("hello");
+			int* ptrToInternalArr = matrix[i];
+			int element = *ptrToInternalArr + j;
+		}
+	}
+
+	return count;
+}	
+
 //general functions defined below here
 void display1DNumericArray(double* arr, size_t arrSize)
 {
@@ -298,3 +433,49 @@ void display2DNumericArray(int(*arr)[5] , size_t numOfRows, size_t numOfCols)
 		printf("\n\n");
 	}
 }
+
+void display2DNumericArrayUsingPtrs(int** arr, size_t numOfRows, size_t numOfCols)
+{
+		/*
+			This is the EXACT SAME FUNCTION as display2DNumericArray but it takes in
+			for its first argument int** arr instead of int (*arr)[5], i had to do this because 
+			C is a horrible programming language :)
+		*/
+
+
+		/*
+		Desired Output:
+
+				col1	col2	col3
+		row1       
+
+		row2
+
+		row3
+
+		Notes: (1): cols has 2 tabs inserted before it
+			   (2): between rows there are 2 new lines
+			   (3): the space between each value is a tab
+
+		*/
+
+	printf("\t\t");
+
+	for(int i = 0; i<numOfCols; i++)
+	{	
+		printf("col%i\t", i+1);
+	}
+
+	printf("\n");
+	for(int i = 0; i<numOfRows; i++)
+	{
+		printf("row%i\t\t", i+1);
+		for(int j = 0; j<numOfCols; j++)
+		{
+			printf("%i\t", arr[i][j]);
+		}
+
+		printf("\n\n");
+	}
+}
+
