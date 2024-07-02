@@ -5,3 +5,4 @@ curious enough to look at them, but otherwise, you can skip them.
 
 The side quests that I pursued here: 
 1- Dynamic Memory Allocation (dynamic_mem_allocation.c)
+2- Pointers and Arrays (pointers_and_arrays.c)

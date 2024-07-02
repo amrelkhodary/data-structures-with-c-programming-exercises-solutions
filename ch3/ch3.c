@@ -16,6 +16,7 @@
 
 	*Sometimes i might skip problems because they are too easy
 	*Sometimes i might solve the problem but using different numerical values for whatever reason.
+	*Problem 14 is solved in its own file.
 
 	Have Fun :)
 
@@ -33,26 +34,36 @@ void p5();
 int p7();
 int **p8();
 int p9(int (*matrix)[3], size_t numOfRows, size_t numOfCols);
-int p10(int *matrix, size_t numOfRows, size_t numOfCols);
+int p10(int (*arr)[], size_t numOfRows, size_t numOfCols);
+int (*p11(int (*arr)[], size_t numOfRows, size_t numOfCols))[];
+float* p12(float* firstArr, size_t firstArr_size, float* secondArr, size_t secondArr_size);
 
 //general purpose functions
 void display1DNumericArray(double* arr, size_t arrSize);
 void display1DNumericArray_int(int* arr, size_t arrSize);
 void display2DNumericArray(int(*arr)[5] , size_t numOfRows, size_t numOfCols);
 void display2DNumericArrayUsingPtrs(int** arr, size_t numOfRows, size_t numOfCols);
-
-
+int (*dynAllocateMemFor2DArray(size_t numOfRows, size_t numOfCols))[];
+void freeDynAllocatedMemoryFor2DArray(int (*ptr)[]);
+float* mergeTwoArrays_float(float* firstArr, size_t firstArr_size, float* secondArr, size_t secondArr_size);
+void reverseArr_float(float* arr, size_t arr_size);
+void swapTwoArrElements_float(float* arr, int firstElement_index, int secondElement_index);
 
 int main()
 {
 	//choose any problem you want to run and call its function here
-	int matrix[3][3] = {1, 2, 3,
-						4, 5, 6,
-						7, 8 ,9};
-/*	printf("The number of non-zero elements is: %i\n", p10((int**)matrix, 3, 3));
-	return 0;*/
-	printf("hello");
-	p10((int*)matrix, 3, 3);
+	float firstArr[3] = {1.0, 2.0, 3.0};
+	float secondArr[3] = {4.0, 5.0, 6.0};
+
+	float* mergedReversedArr = p12(firstArr, 3, secondArr, 3);
+
+	for(int i = 0; i<6; i++)
+	{
+		printf("%f\n", mergedReversedArr[i]);
+	}
+
+	return 0;
+
 }
 
 void p1()
@@ -347,7 +358,7 @@ int p9(int (*matrix)[3], size_t numOfRows, size_t numOfCols)
 	return product;
 }
 
-int p10(int *matrix, size_t numOfRows, size_t numOfCols)
+int p10(int (*arr)[], size_t numOfRows, size_t numOfCols)
 {
 	/*
 		Write a program to count the total number of non-zero elements in a two-dimensional 
@@ -355,19 +366,84 @@ int p10(int *matrix, size_t numOfRows, size_t numOfCols)
 	*/
 
 	int count = 0;
+
+	//make arr have a specifc size
+	int (*arr_specific_size)[numOfCols] = (int (*)[numOfCols]) arr;
+
+	//count the number of non-zero elements using nested for loop
 	for(int i = 0; i<numOfRows; i++)
 	{
 		for(int j = 0; j<numOfCols; j++)
 		{
-			//access internal matrix elements using pointer arithmetic
-			printf("hello");
-			int* ptrToInternalArr = matrix[i];
-			int element = *ptrToInternalArr + j;
+			if(arr_specific_size[i][j] != 0)
+			{
+				count++;
+			}
+		}
+	}
+	return count;
+}
+
+int (*p11(int (*arr)[], size_t numOfRows, size_t numOfCols))[]
+{
+	/*
+		Write a program to input the elements of a two-dimensional array.
+		Then from this array, make two arrays --one that stores all the odd 
+		elements of the array and othe other that stores all even elements of the array
+
+		Algorithm:
+		1- Dynamically allocate a 2D array, with 2 rows and numOfRows * numOfColumns columns
+		2- Loop through the input 2D array, and add even elements in first row of our dyn alloc. 2D
+		   and add odd elements in second row of our dyn alloc. 2D array
+		3- Return the 2D array the we dynamically allocated
+		4- Free the memory allocated for the 2D array
+
+		we will need 2 general functions, one to dynamically allocate memory for our 2D array
+		and another to free this memory
+	*/
+
+	//giving the input array a specific size
+	int (*arr_specific_size)[numOfCols] = (int (*)[numOfCols]) arr;
+	
+	/*
+		the size of the column in our 2D dynamically allocate array is 
+		numOfRows * numOfCols because the number of odd/even elements can't 
+		exceed the total number of elements in the input array
+		(total number of elements in a 2D array = number of rows * number of columns)
+	*/
+	int (*result)[numOfRows * numOfCols] = dynAllocateMemFor2DArray(2, numOfRows * numOfCols); 
+
+	for(int i = 0, index_odd = 0, index_even = 0; i<numOfRows; i++)
+	{
+		for(int j = 0; j<numOfCols; j++)
+		{
+			if(arr_specific_size[i][j] % 2 == 0)
+			{
+				//element is even
+				result[0][index_even] = arr_specific_size[i][j];
+				index_even++;
+			}
+			else
+			{
+				//element is odd
+				result[1][index_odd] = arr_specific_size[i][j];
+				index_odd++;
+			}
 		}
 	}
 
-	return count;
-}	
+	return result;
+}
+
+float* p12(float* firstArr, size_t firstArr_size, float* secondArr, size_t secondArr_size)
+{
+
+	float* arr = mergeTwoArrays_float(firstArr, firstArr_size, secondArr, secondArr_size);
+	reverseArr_float(arr, firstArr_size + secondArr_size);
+	return arr;
+}
+
+
 
 //general functions defined below here
 void display1DNumericArray(double* arr, size_t arrSize)
@@ -479,3 +555,58 @@ void display2DNumericArrayUsingPtrs(int** arr, size_t numOfRows, size_t numOfCol
 	}
 }
 
+int (*dynAllocateMemFor2DArray(size_t numOfRows, size_t numOfCols))[]
+{
+	int (*ptr)[numOfCols] = (int (*)[numOfCols]) calloc(numOfRows, numOfCols * sizeof(int));
+	return ptr;
+}
+
+void freeDynAllocatedMemoryFor2DArray(int (*ptr)[])
+{
+	free(ptr);
+}
+
+float* mergeTwoArrays_float(float* firstArr, size_t firstArr_size, float* secondArr, size_t secondArr_size)
+{
+	float* mergedArr = (float*) calloc(firstArr_size + secondArr_size, sizeof(float));
+	if(mergedArr == NULL)
+	{
+		printf("ERROR: failed to allocate memeory for mergedArr in mergeTwoArrays_float()");
+		exit(-1);
+	}
+
+	//add the first array
+	for(int i = 0; i<firstArr_size; i++)
+	{
+		mergedArr[i] = firstArr[i];
+	}
+
+	//add the second array
+	for(int i = firstArr_size; i<firstArr_size + secondArr_size; i++)
+	{
+		mergedArr[i] = secondArr[i-firstArr_size];
+	}
+
+	return mergedArr;
+}
+
+void reverseArr_float(float* arr, size_t arr_size)
+{
+	/*
+		The Algorithm:
+		1- We'll have a pointer i pointing to the beginning of the array
+		   and a pointer j pointing to the end of the array
+		2- As long as i<j, keep swapping the values of arr[i] and arr[j]
+	*/
+	for(int i = 0, j = arr_size - 1; (i<j); i++, j--)
+	{
+		swapTwoArrElements_float(arr, i, j);
+	}
+}
+
+void swapTwoArrElements_float(float* arr, int firstElement_index, int secondElement_index)
+{
+	float temp = arr[firstElement_index];
+	arr[firstElement_index] = arr[secondElement_index];
+	arr[secondElement_index] = temp;
+}

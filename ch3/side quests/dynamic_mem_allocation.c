@@ -205,7 +205,8 @@ int transformInputToInt(char* str)
 
 int transformIndividualCharacterToInt(char digit)
 {
-	switch(digit){
+
+/*	switch(digit){
 	case '0':
 		return 0;
 	case '1':
@@ -226,6 +227,9 @@ int transformIndividualCharacterToInt(char digit)
 		return 8;
 	case '9': 
 		return 9;
-	}
+	}*/
+
+	return digit - 48; //only realised i could just do this after-the-fact
+					   // i'm as dumb as a door knob lol
 }	
 
