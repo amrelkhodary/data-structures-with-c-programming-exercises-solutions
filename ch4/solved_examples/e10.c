@@ -19,13 +19,8 @@ int main()
 {
 	char str[100], r_pattern[100], i_pattern[100];
 	takeUserInput(str, r_pattern, i_pattern);
-
 	replaceAllPatterns(str, r_pattern, i_pattern);
-
 	printf("The final string is: \n%s", str);
-
-	//shift_test();
-
 }
 
 
