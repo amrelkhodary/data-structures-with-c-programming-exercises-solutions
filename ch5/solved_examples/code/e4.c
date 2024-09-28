@@ -22,6 +22,7 @@ typedef struct{
 	Student students[5];
 } Class;
 
+
 int main()
 {
 	//initialize the class
