@@ -21,16 +21,7 @@ void deleteNode(LinkedList* linkedListPtr, int position);
 void printLinkedList(LinkedList* linkedListPtr);
 
 int main() {
-    //test create and delete functions
-    LinkedList* newLinkedListPtr = createLinkedList();
-    insertNode(newLinkedListPtr, 0, 1);
-    insertNode(newLinkedListPtr, 1, 2);
-    insertNode(newLinkedListPtr, 2, 3);
-    
-    deleteNode(newLinkedListPtr, 0);
-    deleteNode(newLinkedListPtr, 0);
-    deleteNode(newLinkedListPtr, 0);
-    printLinkedList(newLinkedListPtr);
+   
 }
 
 void printLinkedList(LinkedList* linkedListPtr) {
