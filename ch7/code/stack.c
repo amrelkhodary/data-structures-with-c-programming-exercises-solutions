@@ -8,19 +8,20 @@
 typedef struct Stack {
     int* elementsArray;
     int current;
-    int size;
+    size_t size;
 } Stack;
 
-Stack* createStack(int size);
+Stack* createStack(size_t size);
 int deleteStack(Stack* stackptr);
 int push(Stack* stackptr, int element);
 int pop(Stack* stackptr);
+int get(Stack* stackptr);
 
 int main() {
 
 }
 
-Stack* createStack(int size) {
+Stack* createStack(size_t size) {
 
     if(size <= 0) {
         printf("Can't create a stack a size smaller than or equal to 0.\n");
@@ -69,4 +70,13 @@ int pop(Stack* stackptr) {
 
     stackptr -> current = stackptr -> current - 1;
     return SUCCESSFUL;
+}
+
+int get(Stack* stackptr) {
+    if(stackptr -> current == -1) {
+        printf("ERROR: trying to get an element from an empty stack.\n");
+        return INPUT_ERROR;
+    }
+
+    return stackptr -> elementsArray[stackptr -> current];
 }
