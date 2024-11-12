@@ -14,7 +14,7 @@ typedef struct Stack {
 Stack* createStack(int size);
 int deleteStack(Stack* stackptr);
 int push(Stack* stackptr, int element);
-
+int pop(Stack* stackptr);
 
 int main() {
 
@@ -57,5 +57,16 @@ int push(Stack* stackptr, int element) {
     }
 
     stackptr -> elementsArray[stackptr -> current + 1] = element;
+    stackptr -> current = stackptr -> current + 1;
     return SUCCESSFUL;
 } 
+
+int pop(Stack* stackptr) {
+    if(stackptr -> current == -1) {
+        printf("ERROR: Trying to pop an element off an empty stack.\n");
+        return INPUT_ERROR;
+    }
+
+    stackptr -> current = stackptr -> current - 1;
+    return SUCCESSFUL;
+}
