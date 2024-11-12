@@ -17,8 +17,11 @@ int push(Stack* stackptr, int element);
 int pop(Stack* stackptr);
 int get(Stack* stackptr);
 
-int main() {
+void debug_printStack(Stack* stackptr);
 
+int main() {
+    //experiment with the code here
+    
 }
 
 Stack* createStack(size_t size) {
@@ -79,4 +82,13 @@ int get(Stack* stackptr) {
     }
 
     return stackptr -> elementsArray[stackptr -> current];
+}
+
+void debug_printStack(Stack* stackptr) {
+    for(int i = 0; i<stackptr -> size; i++) {
+        printf("%i ", stackptr ->elementsArray[i]);
+    }
+    printf("size: %i", stackptr -> size);
+    printf("current: %i", stackptr -> current);
+    printf("\n");
 }
