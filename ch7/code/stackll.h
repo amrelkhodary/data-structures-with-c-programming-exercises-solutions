@@ -11,6 +11,7 @@
     typedef struct Stackll {
         DoublyLinkedList* sdlinkedlist;
         Node* current;
+        int size;
     } Stackll;
 
     /**
