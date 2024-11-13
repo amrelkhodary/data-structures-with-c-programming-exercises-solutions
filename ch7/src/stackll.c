@@ -52,7 +52,12 @@ int pop(Stackll* stackllptr) {
     return SUCCESSFUL;
 }
 int get(Stackll* stackllptr) {
+    if(stackllptr -> size == 0) {
+        printf("ERROR: Trying to get an element from an empty linkedlist-based stack.\n");
+        return INPUT_ERROR;
+    }
 
+    return stackllptr -> current -> value;
 }
 void debug_printStackll(Stackll* stackllptr) {
 
