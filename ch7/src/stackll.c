@@ -60,5 +60,15 @@ int get(Stackll* stackllptr) {
     return stackllptr -> current -> value;
 }
 void debug_printStackll(Stackll* stackllptr) {
+    printf("----------------------------------DEBUGGING INFO--------------------------------------\n");
+    printDoublyLinkedList(stackllptr -> sdlinkedlist);
+    printf("\n");
+    if(stackllptr -> current != NULL) {
+        printf("Value of current node: %i\n", stackllptr -> current -> value);
+    } else {
+        printf("Value of current node: NULL\n");
+    }
+    printf("\n");
+    prinft("Size of stack: %i\n", stackllptr -> size);
 
 }
