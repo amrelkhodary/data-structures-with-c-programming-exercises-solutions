@@ -1,7 +1,16 @@
 #include "../headers/stackll.h"
 
 int main() {
+    //experiement with the code here
 
+    /*
+        Currently the code has a bug where if the user is trying 
+        to use the get function on an empty stack it will return
+        the number 2, because in this case it returns INPUT_ERROR
+        which is a macro define as 2
+    */
+
+   //TODO: remove the bug described in the previous comment
 }
 
 Stackll* createStackll() {
@@ -46,7 +55,7 @@ int pop(Stackll* stackllptr) {
     } else {
         stackllptr -> current = stackllptr -> current -> prev;
     }
-    deleteNode(stackllptr -> sdlinkedlist, stackllptr -> size);
+    deleteNode(stackllptr -> sdlinkedlist, stackllptr -> size - 1);
     stackllptr -> size--;
 
     return SUCCESSFUL;
@@ -69,6 +78,6 @@ void debug_printStackll(Stackll* stackllptr) {
         printf("Value of current node: NULL\n");
     }
     printf("\n");
-    prinft("Size of stack: %i\n", stackllptr -> size);
+    printf("Size of stack: %i\n", stackllptr -> size);
 
 }
