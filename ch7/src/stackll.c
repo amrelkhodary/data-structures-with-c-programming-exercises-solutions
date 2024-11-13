@@ -18,7 +18,11 @@ Stackll* createStackll() {
     return nstackll;
 }
 int deleteStackll(Stackll* stackllptr) {
+    deleteDoublyLinkedList(stackllptr -> sdlinkedlist);
+    stackllptr -> current = NULL;
+    free(stackllptr);
 
+    return SUCCESSFUL;
 }
 int push(Stackll* stackllptr, int element) {
 
