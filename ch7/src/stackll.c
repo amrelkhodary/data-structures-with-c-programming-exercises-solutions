@@ -25,7 +25,15 @@ int deleteStackll(Stackll* stackllptr) {
     return SUCCESSFUL;
 }
 int push(Stackll* stackllptr, int element) {
+    insertNode(stackllptr -> sdlinkedlist, stackllptr -> size, element);
+    if(stackllptr -> current == NULL) {
+        stackllptr -> current = stackllptr -> sdlinkedlist -> start;
+    } else {
+        stackllptr -> current = stackllptr -> current -> next;
+    }
+    stackllptr -> size++;
 
+    return SUCCESSFUL;
 }
 int pop(Stackll* stackllptr) {
 
