@@ -36,7 +36,20 @@ int push(Stackll* stackllptr, int element) {
     return SUCCESSFUL;
 }
 int pop(Stackll* stackllptr) {
+    if(stackllptr -> size <= 0) {
+        printf("ERROR: Trying to pop an element off an empty linkedlist-based stack.\n");
+        return INPUT_ERROR;
+    }
 
+    if(stackllptr -> size == 1) {
+        stackllptr -> current = NULL;
+    } else {
+        stackllptr -> current = stackllptr -> current -> prev;
+    }
+    deleteNode(stackllptr -> sdlinkedlist, stackllptr -> size);
+    stackllptr -> size--;
+
+    return SUCCESSFUL;
 }
 int get(Stackll* stackllptr) {
 
