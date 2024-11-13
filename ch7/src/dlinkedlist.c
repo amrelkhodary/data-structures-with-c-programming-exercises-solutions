@@ -1,19 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include "dlinkedlist.h"
+#include "../headers/dlinkedlist.h"
 
-#define SUCCESSFUL 0
-#define MEMEORY_ERROR 1
-#define INPUT_ERROR 2
-
-#define TO_INSERT 10
-#define TO_UPDATE_OR_DELETE 20
-
-int main() {
-    //experiment with the code here!
-    
-}
 
 DoublyLinkedList* createDoublyLinkedList() {
     DoublyLinkedList* ndlinkedlist = (DoublyLinkedList*) malloc(sizeof(DoublyLinkedList));
@@ -85,7 +71,7 @@ int insertNode(DoublyLinkedList* dlinkedlist, int position, int value)
     Node* newNode = (Node*) malloc(sizeof(Node));
     if(newNode == NULL) {
         printf("ERROR: Failed to allocate memeory for a new node in the insertNode function.\n");
-        return MEMEORY_ERROR;
+        return MEMORY_ERROR;
     } else {
         newNode -> value = value;
     }

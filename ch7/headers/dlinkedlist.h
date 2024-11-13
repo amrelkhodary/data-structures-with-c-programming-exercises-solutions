@@ -1,5 +1,22 @@
+#ifndef ERRORS
+    #define ERRORS
+    #define SUCCESSFUL 0
+    #define MEMORY_ERROR 1
+    #define INPUT_ERROR 2
+#endif
+
+#ifndef STD
+    #define STD
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <stdbool.h>
+#endif
+
 #ifndef DOUBLY_LINKED_LIST_H
-#define DOULBY_LINKED_LIST_H
+ #define DOULBY_LINKED_LIST_H
+
+ #define TO_INSERT 10
+ #define TO_UPDATE_OR_DELETE 20
 
  typedef struct Node {
      int value;
@@ -23,3 +40,4 @@
  void printDoublyLinkedList(DoublyLinkedList* dlinkedlist);
 
 #endif
+
