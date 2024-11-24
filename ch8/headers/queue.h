@@ -18,7 +18,7 @@
         int size;
     } Queue;
 
-    Queue* createQueue();
+    Queue* createQueue(int size);
     int deleteQueue(Queue* queueptr);
     int push(Queue* queptr, int element);
     int pop(Queue* queptr);
