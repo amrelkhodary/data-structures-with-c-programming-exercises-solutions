@@ -5,19 +5,7 @@
 
 int main()
 {
-    Queue* nqueue = createQueue(3);
-    debugPrintQueue(nqueue, OPERATION_PUSH, 1);
-    debugPrintQueue(nqueue, OPERATION_PUSH, 2);
-    debugPrintQueue(nqueue, OPERATION_PUSH, 3);
-    debugPrintQueue(nqueue, OPERATION_POP, 1);
-    debugPrintQueue(nqueue, OPERATION_PUSH, 4);
-    printf("--------------------------------");
-        debugPrintQueue(nqueue, OPERATION_POP, 1);
-
-    debugPrintQueue(nqueue, OPERATION_POP, 1);
-
-    debugPrintQueue(nqueue, OPERATION_POP, 1);
-
+    
 }
 
 Queue* createQueue(size_t size) {
