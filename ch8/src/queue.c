@@ -5,7 +5,12 @@ int main()
 
 }
 
-Queue* createQueue(int size) {
+Queue* createQueue(size_t size) {
+    if(size <= 0) {
+        printf("INPUT ERROR: trying to create a queue with a size less than or equalling zero.\n");
+        return INPUT_ERROR;
+    }
+
     Queue* nQueuePtr = (Queue*) malloc(sizeof(Queue));
     if(nQueuePtr == NULL) {
         printf("MEMORY_ERROR: failed to allocate memory to new queue.\n");
@@ -16,9 +21,10 @@ Queue* createQueue(int size) {
         printf("MEMORY_ERROR: failed to allocate memory for elements array inside new queue.\n");
         return MEMORY_ERROR;
     }
-    nQueuePtr -> pushindex = 0;
-    nQueuePtr -> popindex = 0;
-    nQueuePtr -> size = 0; //here, size referes to how many elements are currently in the queue not the size of the array itself
+    nQueuePtr -> start = 0;
+    nQueuePtr -> end = 0;
+    nQueuePtr -> size = size;
+    nQueuePtr -> count = 0;
 
     return nQueuePtr;
 }
@@ -28,3 +34,21 @@ int deleteQueue(Queue* queueptr) {
     free(queueptr);
 }
 
+int push(Queue* queptr, int element) {
+    //check if the queue is already full
+    if(queptr -> count == queptr -> size) {
+        printf("INPUT ERROR: trying to push an element into a full queue.\n");
+        return INPUT_ERROR;
+    }
+
+    //push the element
+    queptr -> elements[queptr -> end] = element;
+    queptr -> count++;
+
+    //shift the end pointer
+    if(queptr -> count == queptr -> size) {
+        queptr -> end = PTR_OUT_OF_BOUNDS;
+    } else {
+        queptr -> end = (queptr -> start + queptr -> count) % 3;
+    }
+}
