@@ -51,4 +51,26 @@ int push(Queue* queptr, int element) {
     } else {
         queptr -> end = (queptr -> start + queptr -> count) % 3;
     }
+
+    return SUCCESSFUL;
+}
+
+int pop(Queue* queueptr) {
+    //check if queue is empty
+    if(queueptr -> count <= 0) {
+        printf("INPUT_ERROR: trying to pop an element off an empty queue.\n");
+        return INPUT_ERROR;
+    }
+
+    //get the element to pop it later in the function
+    int popElement = queueptr -> elements[queueptr -> start];
+
+    //shift the start pointer
+    queueptr -> start = (queueptr -> start + 1) % 3;
+    if(queueptr -> end == PTR_OUT_OF_BOUNDS) {
+        queueptr -> end = (queueptr -> start + queueptr -> count) % 3;
+    }
+
+    //return the pop element
+    return popElement;
 }
