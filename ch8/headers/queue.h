@@ -26,5 +26,5 @@
     int push(Queue* queptr, int element);
     int pop(Queue* queptr);
     
-    void debugPrintQueue(Queue* queptr);
+    void debugPrintQueue(Queue* queptr, int operation, int element);
 #endif

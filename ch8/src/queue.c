@@ -1,7 +1,22 @@
-#include "./headers/queue.h"
+#include "../headers/queue.h"
+
+#define OPERATION_PUSH 300
+#define OPERATION_POP 400
 
 int main()
 {
+    Queue* nqueue = createQueue(3);
+    debugPrintQueue(nqueue, OPERATION_PUSH, 1);
+    debugPrintQueue(nqueue, OPERATION_PUSH, 2);
+    debugPrintQueue(nqueue, OPERATION_PUSH, 3);
+    debugPrintQueue(nqueue, OPERATION_POP, 1);
+    debugPrintQueue(nqueue, OPERATION_PUSH, 4);
+    printf("--------------------------------");
+        debugPrintQueue(nqueue, OPERATION_POP, 1);
+
+    debugPrintQueue(nqueue, OPERATION_POP, 1);
+
+    debugPrintQueue(nqueue, OPERATION_POP, 1);
 
 }
 
@@ -64,6 +79,7 @@ int pop(Queue* queueptr) {
 
     //get the element to pop it later in the function
     int popElement = queueptr -> elements[queueptr -> start];
+    queueptr -> count--;
 
     //shift the start pointer
     queueptr -> start = (queueptr -> start + 1) % 3;
@@ -73,4 +89,20 @@ int pop(Queue* queueptr) {
 
     //return the pop element
     return popElement;
+}
+
+void debugPrintQueue(Queue* queueptr, int operation, int element) {
+    if(operation == OPERATION_PUSH) {
+        push(queueptr, element);
+    }
+    else if(operation == OPERATION_POP) {
+        printf("output of the pop operation is: %i\n", pop(queueptr));
+    }
+    printf("DEBUGGING: queue -> elements: ");
+    for(int i = 0; i<queueptr -> size; i++) {
+        printf("%i ", queueptr -> elements[i]);
+    }
+    printf("\n DEBUGGING: queue -> count = %i\n", queueptr -> count);
+    printf("DEBUGGING: queue -> start = %i\n", queueptr -> start);
+    printf("DEBUGGING: queue -> end = %i\n\n\n", queueptr -> end);
 }
