@@ -8,17 +8,7 @@
 LinkedList* removeDuplicates(LinkedList* ll);
 
 int main() {
-    //creating a linkedlist to test the code on 
-    LinkedList* testLinkedList = createLinkedList();
-    insertNode(testLinkedList, 0, 1);
-    insertNode(testLinkedList, 1, 2);
-    insertNode(testLinkedList, 2, 1);
-    insertNode(testLinkedList, 3, 2);
-    insertNode(testLinkedList, 4, 19);
 
-
-    //TODO: implement solution here
-    printLinkedList(removeDuplicates(testLinkedList));
 }
 
 LinkedList* removeDuplicates(LinkedList* ll) {

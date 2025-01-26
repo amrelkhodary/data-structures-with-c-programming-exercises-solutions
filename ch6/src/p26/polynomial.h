@@ -23,7 +23,21 @@
     void insertNode(LinkedList* linkedListPtr, int position, int value);
     void updateNode(LinkedList* linkedListPtr, int position, int newValue);
     void deleteNode(LinkedList* linkedListPtr, int position);
-    int getValue(LinkedList* linkedListPtr, int position);
-    Node* getNode(LinkedList* linkedListPtr, int position);
     void printLinkedList(LinkedList* linkedListPtr);
+#endif
+
+#ifndef POLYNOMIAL
+#define POLYNOMIAL
+    typedef struct Term {
+        int factor;
+        int exponent;
+    } Term;
+
+    typedef struct Polynomial {
+        LinkedList* plinkedlist;
+    } Polynomial;
+
+    Polynomial* createPolynomial(Term* terms, size_t numOfTerms);
+    Polynomial* multiplyPolynomialByFactor(Polynomial* polynomial, int factor);
+    void printPolynomial(Polynomial* polynomial);
 #endif

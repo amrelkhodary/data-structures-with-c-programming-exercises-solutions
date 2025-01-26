@@ -121,3 +121,25 @@ void deleteNode(LinkedList* linkedListPtr, int position) {
 
     linkedListPtr -> nodeCount--;
 }
+
+int getValue(LinkedList* linkedListPtr, int position) {
+    Node* node = linkedListPtr -> start;
+    int count = 0;
+    while(count != position) {
+        node = node -> next;
+        count++;
+    }
+
+    return node -> value;
+}
+
+Node* getNode(LinkedList* linkedListPtr, int position) {
+    Node* node = linkedListPtr -> start;
+    int count = 0;
+    while(count != position) {
+        node = node -> next;
+        count++;
+    }
+
+    return node;
+}
